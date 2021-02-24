@@ -1,5 +1,5 @@
 <template>
-    <inertia-link :href="href" :class="classes">
+    <inertia-link :href="href" :class="classes" preserve-state preserve-scroll>
         <slot />
     </inertia-link>
 </template>

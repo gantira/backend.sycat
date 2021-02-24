@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\TagController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -15,6 +16,8 @@ use Inertia\Inertia;
 |
 */
 
+require __DIR__ . '/auth.php';
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -28,4 +31,14 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(function () {
+
+    Route::prefix('tags')->name('tags.')->group(function () {
+        Route::get('', [TagController::class, 'index'])->name('index');
+        Route::post('', [TagController::class, 'store'])->name('store');
+        Route::get('create', [TagController::class, 'create'])->name('create');
+        Route::get('{tag}', [TagController::class, 'edit'])->name('edit');
+        Route::put('{tag}', [TagController::class, 'update'])->name('update');
+        Route::delete('{tag}', [TagController::class, 'destroy'])->name('delete');
+    });
+});
