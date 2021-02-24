@@ -35,6 +35,13 @@
                                 >
                                     Category
                                 </breeze-nav-link>
+                                <breeze-nav-link
+                                    :href="route('admin.teams.index')"
+                                    :active="route().current('admin.teams.*')"
+                                    :only="['teams']"
+                                >
+                                    Team
+                                </breeze-nav-link>
                             </div>
                         </div>
 
