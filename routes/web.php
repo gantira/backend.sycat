@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\{CategoryController, TagController};
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -40,5 +40,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
         Route::get('{tag}', [TagController::class, 'edit'])->name('edit');
         Route::put('{tag}', [TagController::class, 'update'])->name('update');
         Route::delete('{tag}', [TagController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('categories')->name('categories.')->group(function () {
+        Route::get('', [CategoryController::class, 'index'])->name('index');
+        Route::post('', [CategoryController::class, 'store'])->name('store');
+        Route::get('create', [CategoryController::class, 'create'])->name('create');
+        Route::get('{category}', [CategoryController::class, 'edit'])->name('edit');
+        Route::put('{category}', [CategoryController::class, 'update'])->name('update');
+        Route::delete('{category}', [CategoryController::class, 'destroy'])->name('delete');
     });
 });
