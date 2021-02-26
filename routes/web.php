@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\{CategoryController, TagController, TeamController};
+use App\Http\Controllers\Admin\{CategoryController, PostController, TagController, TeamController};
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -58,5 +58,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'verified'])->group(
         Route::get('{team}', [TeamController::class, 'edit'])->name('edit');
         Route::put('{team}', [TeamController::class, 'update'])->name('update');
         Route::delete('{team}', [TeamController::class, 'destroy'])->name('delete');
+    });
+
+    Route::prefix('posts')->name('posts.')->group(function () {
+        Route::get('', [PostController::class, 'index'])->name('index');
+        Route::post('', [PostController::class, 'store'])->name('store');
+        Route::get('create', [PostController::class, 'create'])->name('create');
+        Route::get('{post}', [PostController::class, 'edit'])->name('edit');
+        Route::put('{post}', [PostController::class, 'update'])->name('update');
+        Route::delete('{post}', [PostController::class, 'destroy'])->name('delete');
     });
 });

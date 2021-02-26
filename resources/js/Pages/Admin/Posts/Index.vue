@@ -1,7 +1,7 @@
 <template>
     <breeze-authenticated-layout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Category</h2>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Post</h2>
         </template>
 
         <div class="py-12">
@@ -18,8 +18,8 @@
                                     <breeze-input-search v-model="form.query" />
                                 </form>
 
-                                <inertia-link :href="route('admin.categories.create')">
-                                    <breeze-button>Create Category</breeze-button>
+                                <inertia-link :href="route('admin.posts.create')">
+                                    <breeze-button>Create Post</breeze-button>
                                 </inertia-link>
                             </div>
                             <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -30,13 +30,13 @@
                                                 scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                             >
-                                                Name
+                                                Post
                                             </th>
                                             <th
                                                 scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                             >
-                                                Slug
+                                                Status
                                             </th>
                                             <th
                                                 scope="col"
@@ -48,19 +48,43 @@
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
                                         <tr
-                                            v-for="(category, key) in categories.data"
+                                            v-for="(post, key) in posts.data"
                                             :key="key"
                                             class="hover:bg-gray-50"
                                         >
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                {{ category.name }}
+                                            <td class="px-6 py-4 ">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <img
+                                                            class="h-10 w-10 rounded-full"
+                                                            :src="post.user.photo_icon"
+                                                            alt=""
+                                                        >
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="font-semibold tracking-wider text-gray-900">
+                                                            {{ post.title }}
+                                                        </div>
+                                                        <div class="text-xs text-gray-500">
+                                                            <i
+                                                                class="fa fa-user text-gray-300"
+                                                                aria-hidden="true"
+                                                            ></i> {{ post.user.name }}
+                                                            <i
+                                                                class="fa fa-clock-o text-gray-300"
+                                                                aria-hidden="true"
+                                                            ></i> {{ formatDate(post.created_at) }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                {{ category.slug }}
+                                                <breeze-badge :status="post.status" />
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <inertia-link
-                                                    :href="route('admin.categories.edit', category)"
+                                                    :href="route('admin.posts.edit', post)"
                                                     class="text-indigo-600 hover:text-indigo-900"
                                                 >
                                                     <button>Edit</button>
@@ -68,7 +92,7 @@
 
                                                 <button
                                                     class="ml-2 text-indigo-600 hover:text-indigo-900"
-                                                    @click="destroy(category)"
+                                                    @click="destroy(post)"
                                                 >Delete</button>
                                             </td>
                                         </tr>
@@ -87,7 +111,7 @@
                                         <!-- More items... -->
                                     </tbody>
                                 </table>
-                                <Pagination :links="categories.links"></Pagination>
+                                <Pagination :links="posts.links"></Pagination>
                             </div>
                         </div>
                     </div>
@@ -103,6 +127,7 @@ import Pagination from "@/Components/Pagination";
 import BreezeButton from "@/Components/Button";
 import BreezeAlert from "@/Components/Alert";
 import BreezeInputSearch from "@/Components/InputSearch";
+import BreezeBadge from "@/Components/Badge";
 
 export default {
     components: {
@@ -111,15 +136,16 @@ export default {
         BreezeButton,
         BreezeAlert,
         BreezeInputSearch,
+        BreezeBadge,
     },
 
     props: {
-        categories: Object,
+        posts: Object,
     },
 
     computed: {
         showData() {
-            return this.categories.data.length ? true : false;
+            return this.posts.data.length ? true : false;
         },
     },
 
@@ -133,16 +159,17 @@ export default {
 
     methods: {
         submit() {
-            this.form.get(route("admin.categories.index"), {
+            this.form.get(route("admin.posts.index"), {
                 preserveState: true,
                 preserveScroll: true,
-                only: ["categories"],
+                only: ["posts"],
             });
         },
 
-        destroy(category) {
-            this.$inertia.delete(route("admin.categories.delete", category), {
+        destroy(post) {
+            this.$inertia.delete(route("admin.posts.delete", post), {
                 onBefore: () => confirm("Are you sure?"),
+                preserveScroll: true,
             });
         },
     },

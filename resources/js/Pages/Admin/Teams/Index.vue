@@ -50,6 +50,7 @@
                                         <tr
                                             v-for="(team, key) in teams.data"
                                             :key="key"
+                                            class="hover:bg-gray-50"
                                         >
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 {{ team.name }}

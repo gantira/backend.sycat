@@ -37,10 +37,7 @@
 
 <script>
 import BreezeAuthenticatedLayout from "@/Layouts/Authenticated";
-import BreezeButton from "@/Components/Button";
-import BreezeLabel from "@/Components/Label";
-import BreezeInput from "@/Components/Input";
-import BreezeInputError from "@/Components/InputError";
+
 
 export default {
     components: {

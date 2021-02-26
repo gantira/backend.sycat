@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="alertOpen"
-        class="text-grey-500 px-6 py-4 rounded-lg relative mb-4 bg-white hover:text-grey-700 shadow-md"
+        class="text-grey-500 px-6 py-4 rounded-lg relative mb-4 bg-white hover:text-grey-700 shadow"
     >
         <span class="text-xl inline-block mr-5 align-middle">
             <i class="fa fa-check"></i>

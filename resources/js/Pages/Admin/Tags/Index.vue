@@ -50,6 +50,7 @@
                                         <tr
                                             v-for="(tag, key) in tags.data"
                                             :key="key"
+                                            class="hover:bg-gray-50"
                                         >
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 {{ tag.name }}
