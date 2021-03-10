@@ -84,14 +84,20 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                 <inertia-link
+                                                    :href="route('admin.posts.show', post)"
+                                                    class="mr-2 text-indigo-600 hover:text-indigo-900"
+                                                >
+                                                    <button>Show</button>
+                                                </inertia-link>
+                                                <inertia-link
                                                     :href="route('admin.posts.edit', post)"
-                                                    class="text-indigo-600 hover:text-indigo-900"
+                                                    class="mr-2 text-indigo-600 hover:text-indigo-900"
                                                 >
                                                     <button>Edit</button>
                                                 </inertia-link>
 
                                                 <button
-                                                    class="ml-2 text-indigo-600 hover:text-indigo-900"
+                                                    class="text-indigo-600 hover:text-indigo-900"
                                                     @click="destroy(post)"
                                                 >Delete</button>
                                             </td>

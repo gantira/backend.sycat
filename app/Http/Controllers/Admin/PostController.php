@@ -87,7 +87,9 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return Inertia::render('Admin/Posts/Show', [
+            'post' => $post,
+        ]);
     }
 
     /**
